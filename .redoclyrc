@@ -1,8 +1,0 @@
-specFileName: swagger.yaml
-apiTitle: Diagrammatic
-splitSpec: false
-codeSamples: true
-swaggerUI: false
-travis: true
-repo: KosmasMarios5/Diagrammatic
-oasVersion: 3.0.2
