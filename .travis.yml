@@ -11,6 +11,5 @@ deploy:
     provider: script
     script: npm run build && npm run gh-pages -- -p "$TRAVIS_BRANCH"
     on:
-      branch: master
-#      all_branches: true
-#      condition: '"$TRAVIS_BRANCH" != "master" && "$TRAVIS_BRANCH" != "gh-pages"'
+      all_branches: true
+      condition: '"$TRAVIS_BRANCH" != "master" && "$TRAVIS_BRANCH" != "gh-pages"'
