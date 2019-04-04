@@ -144,7 +144,7 @@
           "ExerciseCollection"
         ],
         "summary": "Get ExerciseCollection Exercises",
-        "description": "Provides an array of all the exercises contained in this exercise collection.",
+        "description": "Get an array of all the exercises contained in this exercise collection.",
         "parameters": [
           {
             "name": "Id",
@@ -179,6 +179,47 @@
             "BasicAuthentication": []
           }
         ]
+      },
+      "post": {
+        "tags": [
+          "Exercises"
+        ],
+        "summary": "Create an Exercise",
+        "description": "Add an `Exercise` to an `ExerciseCollection`",
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "path",
+            "description": "The Id of the exercise collection.\r\n",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Exercise"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successfull response - returns a single `Exercise`.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Exercise"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/exerciseCollection/{Id}/exercises/{exerciseId}": {
@@ -283,61 +324,6 @@
           },
           "404": {
             "description": "Not Found"
-          }
-        },
-        "security": [
-          {
-            "BasicAuthentication": []
-          }
-        ]
-      },
-      "post": {
-        "tags": [
-          "Exercises"
-        ],
-        "summary": "Create an Exercise",
-        "description": "Add an `Exercise` to an `ExerciseCollection`",
-        "parameters": [
-          {
-            "name": "exerciseId",
-            "in": "path",
-            "description": "The Id of the exercise inside this exercise collection.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "Id",
-            "in": "path",
-            "description": "The Id of the exercise collection.\r\n",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Exercise"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": "Successfull response - returns a single `Exercise`.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Exercise"
-                }
-              }
-            }
           }
         },
         "security": [
