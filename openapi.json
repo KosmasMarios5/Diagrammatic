@@ -33,6 +33,39 @@
             "BasicAuthentication": []
           }
         ]
+      },
+      "post": {
+        "tags": [
+          "ExerciseCollection"
+        ],
+        "summary": "Create an Exercise Collection",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExerciseCollection"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successfull response - returns a new `ExerciseCollection`",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExerciseCollection"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BasicAuthentication": []
+          }
+        ]
       }
     },
     "/exerciseCollection/{Id}": {
@@ -577,6 +610,42 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/Submission"
+              },
+              "examples": {
+                "Path Example": {
+                  "value": {
+                    "ProblemType": "Path",
+                    "Answer": {
+                      "Edges": [
+                        {},
+                        {}
+                      ],
+                      "Nodes": [
+                        {},
+                        {}
+                      ]
+                    },
+                    "AuthorId": "some text"
+                  }
+                },
+                "Diagram Example": {
+                  "value": {
+                    "ProblemType": "Diagram",
+                    "Answer": {
+                      "Paths": {
+                        "Edges": [
+                          {},
+                          {}
+                        ],
+                        "Nodes": [
+                          {},
+                          {}
+                        ]
+                      }
+                    },
+                    "AuthorId": "some text"
+                  }
+                }
               }
             }
           },
@@ -935,49 +1004,6 @@
       "ProblemAnswer": {
         "type": "object"
       },
-      "DiagramProblem": {
-        "description": "A problem defines the what is requested from a student during an exam.",
-        "allOf": [
-          {
-            "type": "object"
-          },
-          {
-            "$ref": "#/components/schemas/Problem"
-          }
-        ]
-      },
-      "Submission": {
-        "required": [
-          "Problem",
-          "Exam",
-          "AuthorId"
-        ],
-        "type": "object",
-        "properties": {
-          "Id": {
-            "type": "string"
-          },
-          "Problem": {
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/DiagramProblem"
-              },
-              {
-                "$ref": "#/components/schemas/Problem"
-              }
-            ]
-          },
-          "Score": {
-            "type": "number"
-          },
-          "AuthorId": {
-            "type": "string"
-          },
-          "Exam": {
-            "type": "string"
-          }
-        }
-      },
       "Problem": {
         "description": "A problem defines the what is requested from a student during an exam.",
         "required": [
@@ -997,6 +1023,81 @@
           },
           "Answer": {
             "type": "object"
+          }
+        }
+      },
+      "DiagramProblem": {
+        "description": "A problem defines the what is requested from a student during an exam.",
+        "required": [
+          "ProblemType",
+          "Answer"
+        ],
+        "type": "object",
+        "properties": {
+          "Id": {
+            "description": "A unique identifier.",
+            "type": "string"
+          },
+          "ProblemType": {
+            "default": "Diagram",
+            "type": "string"
+          },
+          "Answer": {
+            "$ref": "#/components/schemas/Diagram"
+          }
+        }
+      },
+      "PathProblem": {
+        "description": "Defines a problem of listing available paths.",
+        "required": [
+          "ProblemType",
+          "Answer"
+        ],
+        "type": "object",
+        "properties": {
+          "Id": {
+            "description": "A unique identifier.",
+            "type": "string"
+          },
+          "ProblemType": {
+            "default": "Path",
+            "type": "string"
+          },
+          "Answer": {
+            "$ref": "#/components/schemas/PathList"
+          }
+        }
+      },
+      "Submission": {
+        "required": [
+          "Problem",
+          "Exam",
+          "AuthorId"
+        ],
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "string"
+          },
+          "Problem": {
+            "$ref": "#/components/schemas/PathProblem",
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/PathProblem"
+              },
+              {
+                "$ref": "#/components/schemas/DiagramProblem"
+              }
+            ]
+          },
+          "Score": {
+            "type": "number"
+          },
+          "AuthorId": {
+            "type": "string"
+          },
+          "Exam": {
+            "type": "string"
           }
         }
       }
