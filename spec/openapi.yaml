@@ -4,15 +4,15 @@ info:
   title: Diagrammatic
   version: 1.0.1
 paths:
-  "/exerciseCollection":
+  /exerciseCollection:
     summary: Resource to manage an exercise collection.
     get:
       tags:
-        - ExerciseCollection
+      - ExerciseCollection
       summary: Get all ExerciseCollections
       description: List all available exercise collections.
       responses:
-        '200':
+        200:
           description: Successful response - returns an array of `ExerciseCollection`
             entities.
           content:
@@ -20,243 +20,262 @@ paths:
               schema:
                 type: array
                 items:
-                  "$ref": "#/components/schemas/ExerciseCollection"
+                  $ref: '#/components/schemas/ExerciseCollection'
       security:
-        - BasicAuthentication: []
-  "/exerciseCollection/{Id}":
+      - BasicAuthentication: []
+    post:
+      tags:
+      - ExerciseCollection
+      summary: Create an Exercise Collection
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExerciseCollection'
+        required: true
+      responses:
+        201:
+          description: Successfull response - returns a new `ExerciseCollection`
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExerciseCollection'
+      security:
+      - BasicAuthentication: []
+  /exerciseCollection/{Id}:
     get:
       tags:
-        - ExerciseCollection
+      - ExerciseCollection
       summary: Get an ExerciseCollection
       description: Get a single `ExerciseCollection` entitiy.
       parameters:
-        - name: Id
-          in: path
-          description: The Id of the exercise collection.
-          required: true
-          schema:
-            type: string
+      - name: Id
+        in: path
+        description: The Id of the exercise collection.
+        required: true
+        schema:
+          type: string
       responses:
-        '200':
+        200:
           description: Successful response - returns a single `ExerciseCollection`.
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ExerciseCollection"
-        '403':
+                $ref: '#/components/schemas/ExerciseCollection'
+        403:
           description: Forbidden
-        '404':
+        404:
           description: Not Found
       security:
-        - BasicAuthentication: []
+      - BasicAuthentication: []
     delete:
       tags:
-        - ExerciseCollection
+      - ExerciseCollection
       summary: Delete an ExerciseCollection
       responses:
-        '204':
+        204:
           description: Successfull response.
       security:
-        - BasicAuthentication: []
+      - BasicAuthentication: []
     patch:
       tags:
-        - ExerciseCollection
+      - ExerciseCollection
       summary: Update Exercise Collection
       description: Update fields like Name and Category of an exercise collection.
       responses:
-        '200':
+        200:
           description: Successfull response - returns a single `ExerciseCollection`
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ExerciseCollection"
-        '400':
+                $ref: '#/components/schemas/ExerciseCollection'
+        400:
           description: Bad Request
-        '403':
+        403:
           description: Forbidden
-        '404':
+        404:
           description: Not Found
       security:
-        - BasicAuthentication: []
+      - BasicAuthentication: []
     parameters:
+    - name: Id
+      in: path
+      description: "The Id of the exercise collection.\r\n"
+      required: true
+      schema:
+        type: string
+  /exerciseCollection/{Id}/exercises:
+    get:
+      tags:
+      - ExerciseCollection
+      summary: Get ExerciseCollection Exercises
+      description: Get an array of all the exercises contained in this exercise collection.
+      parameters:
       - name: Id
         in: path
         description: "The Id of the exercise collection.\r\n"
         required: true
         schema:
           type: string
-  "/exerciseCollection/{Id}/exercises":
-    get:
-      tags:
-        - ExerciseCollection
-      summary: Get ExerciseCollection Exercises
-      description: Get an array of all the exercises contained in this exercise collection.
-      parameters:
-        - name: Id
-          in: path
-          description: "The Id of the exercise collection.\r\n"
-          required: true
-          schema:
-            type: string
       responses:
-        '200':
+        200:
           description: Successful response - returns an array of `Exercise` entities.
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  "$ref": "#/components/schemas/Exercise"
-        '404':
+                  $ref: '#/components/schemas/Exercise'
+        404:
           description: Not Found
       security:
-        - BasicAuthentication: []
+      - BasicAuthentication: []
     post:
       tags:
-        - Exercises
+      - Exercises
       summary: Create an Exercise
       description: Add an `Exercise` to an `ExerciseCollection`
       parameters:
-        - name: Id
-          in: path
-          description: "The Id of the exercise collection.\r\n"
-          required: true
-          schema:
-            type: string
+      - name: Id
+        in: path
+        description: "The Id of the exercise collection.\r\n"
+        required: true
+        schema:
+          type: string
       requestBody:
-        description: ''
+        description: ""
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/Exercise"
+              $ref: '#/components/schemas/Exercise'
         required: true
       responses:
-        '201':
+        201:
           description: Successfull response - returns a single `Exercise`.
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/Exercise"
-  "/exerciseCollection/{Id}/exercises/{exerciseId}":
+                $ref: '#/components/schemas/Exercise'
+  /exerciseCollection/{Id}/exercises/{exerciseId}:
     get:
       tags:
-        - Exercises
+      - Exercises
       summary: Get an Exercise
       description: 'Get a single `Exercise` from an `ExerciseCollection`. '
       parameters:
-        - name: exerciseId
-          in: path
-          description: The Id of the exercise inside this exercise collection.
-          required: true
-          schema:
-            type: string
-        - name: Id
-          in: path
-          description: The Id of the exercise collection.
-          required: true
-          schema:
-            type: string
+      - name: exerciseId
+        in: path
+        description: The Id of the exercise inside this exercise collection.
+        required: true
+        schema:
+          type: string
+      - name: Id
+        in: path
+        description: The Id of the exercise collection.
+        required: true
+        schema:
+          type: string
       responses:
-        '200':
+        200:
           description: Successfull response - returns a single `Exercise`.
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/Exercise"
-        '404':
+                $ref: '#/components/schemas/Exercise'
+        404:
           description: Not Found
       security:
-        - BasicAuthentication: []
+      - BasicAuthentication: []
     put:
       tags:
-        - Exercises
+      - Exercises
       summary: Update Exercise
       parameters:
-        - name: Id
-          in: path
-          description: The Id of the exercise collection.
-          required: true
-          schema:
-            type: string
-        - name: exerciseId
-          in: path
-          description: The Id of the exercise inside this exercise collection.
-          required: true
-          schema:
-            type: string
+      - name: Id
+        in: path
+        description: The Id of the exercise collection.
+        required: true
+        schema:
+          type: string
+      - name: exerciseId
+        in: path
+        description: The Id of the exercise inside this exercise collection.
+        required: true
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/Exercise"
+              $ref: '#/components/schemas/Exercise'
         required: true
       responses:
-        '200':
+        200:
           description: Successfull response - returns the updated `Exercise`
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/Exercise"
-        '400':
+                $ref: '#/components/schemas/Exercise'
+        400:
           description: Bad Request
-        '403':
+        403:
           description: Forbidden
-        '404':
+        404:
           description: Not Found
       security:
-        - BasicAuthentication: []
+      - BasicAuthentication: []
     delete:
       tags:
-        - Exercises
+      - Exercises
       summary: Remove Exercise From Collection
       description: Deletes an `Exercise` existing in a an `ExerciseCollection`
       parameters:
-        - name: Id
-          in: path
-          description: "The Id of the exercise collection.\r\n"
-          required: true
-          schema:
-            type: string
-        - name: exerciseId
-          in: path
-          description: The Id of the exercise inside this exercise collection.
-          required: true
-          schema:
-            type: string
+      - name: Id
+        in: path
+        description: "The Id of the exercise collection.\r\n"
+        required: true
+        schema:
+          type: string
+      - name: exerciseId
+        in: path
+        description: The Id of the exercise inside this exercise collection.
+        required: true
+        schema:
+          type: string
       responses:
-        '204':
+        204:
           description: Deleted
       security:
-        - BasicAuthentication: []
-  "/exam":
+      - BasicAuthentication: []
+  /exam:
     get:
       tags:
-        - Exam
+      - Exam
       summary: Get all Exams
       description: Returns an array of all the available `Exams`.
       parameters:
-        - name: published
-          in: query
-          description: Whether the consumer wants the published or the unpublished exams.
-            Return all the exams by default.
-          schema:
-            type: boolean
+      - name: published
+        in: query
+        description: Whether the consumer wants the published or the unpublished exams.
+          Return all the exams by default.
+        schema:
+          type: boolean
       responses:
-        '200':
+        200:
           description: Successfyll response - returns an array of `Exam`
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  "$ref": "#/components/schemas/Exam"
-        '403':
+                  $ref: '#/components/schemas/Exam'
+        403:
           description: Forbidden
       security:
-        - BasicAuthentication: []
+      - BasicAuthentication: []
     post:
       tags:
-        - Exam
+      - Exam
       summary: Create an Exam
       description: Create a new `Exam` from an `ExerciseCollection`
       requestBody:
@@ -269,109 +288,133 @@ paths:
                   Published: boolean
         required: true
       responses:
-        '201':
+        201:
           description: Successfull response - returns a single `Exam`
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/Exam"
-  "/exam/{Id}":
+                $ref: '#/components/schemas/Exam'
+  /exam/{Id}:
     summary: Path used to manage a single Exam.
     description: The REST endpoint/path used to get, update, and delete single instances
       of an `Exam`.  This path contains `GET`, `PUT`, and `DELETE` operations used
       to perform the get, update, and delete tasks, respectively.
     get:
       tags:
-        - Exam
+      - Exam
       summary: Get an Exam
       description: Gets the details of a single instance of a `Exam`.
       operationId: getExam
       parameters:
-        - name: Id
-          in: path
-          description: A unique identifier for an `Exam`.
-          required: true
-          schema:
-            type: string
+      - name: Id
+        in: path
+        description: A unique identifier for an `Exam`.
+        required: true
+        schema:
+          type: string
       responses:
-        '200':
+        200:
           description: Successful response - returns a single `Exam`.
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/Exam"
-        '403':
+                $ref: '#/components/schemas/Exam'
+        403:
           description: Forbidden
-        '404':
+        404:
           description: Not Found
       security:
-        - BasicAuthentication: []
+      - BasicAuthentication: []
     delete:
       tags:
-        - Exam
+      - Exam
       summary: Delete an Exam
       description: Deletes an existing `Exam` and all of its `Submissions`.
       operationId: deleteExam
       responses:
-        '204':
+        204:
           description: Successful response.
     parameters:
+    - name: Id
+      in: path
+      description: A unique identifier for a `Exam`.
+      required: true
+      schema:
+        type: string
+  /exam/{Id}/submissions:
+    get:
+      tags:
+      - Submission
+      - Exam
+      summary: Get all Submissions
+      parameters:
       - name: Id
         in: path
-        description: A unique identifier for a `Exam`.
+        description: A unique identifier for an `Exam`.
         required: true
         schema:
           type: string
-  "/exam/{Id}/submissions":
-    get:
-      tags:
-        - Submission
-        - Exam
-      summary: Get all Submissions
-      parameters:
-        - name: Id
-          in: path
-          description: A unique identifier for an `Exam`.
-          required: true
-          schema:
-            type: string
       responses:
-        '200':
+        200:
           description: Successful response - returns an array of `Submission`.
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  "$ref": "#/components/schemas/Submission"
+                  $ref: '#/components/schemas/Submission'
       security:
-        - BasicAuthentication: []
+      - BasicAuthentication: []
     post:
       tags:
-        - Submission
+      - Submission
       summary: Create a Submission
       description: Create a new `Submission` for this `Exam`.
       parameters:
-        - name: Id
-          in: path
-          description: A unique identifier for an `Exam`.
-          required: true
-          schema:
-            type: string
+      - name: Id
+        in: path
+        description: A unique identifier for an `Exam`.
+        required: true
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/Submission"
+              $ref: '#/components/schemas/Submission'
+            examples:
+              Path Example:
+                value:
+                  ProblemType: Path
+                  Answer:
+                    Edges:
+                    - {}
+                    - {}
+                    Nodes:
+                    - {}
+                    - {}
+                  AuthorId: some text
+              Diagram Example:
+                value:
+                  ProblemType: Diagram
+                  Answer:
+                    Paths:
+                      Edges:
+                      - {}
+                      - {}
+                      Nodes:
+                      - {}
+                      - {}
+                  AuthorId: some text
         required: true
       responses:
-        '201':
+        201:
           description: Successfull response returns a single `Submission`
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/Submission"
-        '400':
+                $ref: '#/components/schemas/Submission'
+        400:
           description: Bad Request
 components:
   schemas:
@@ -392,10 +435,10 @@ components:
         width: 60
         height: 60
         style:
-          fill: "#5FB4DC"
+          fill: '#5FB4DC'
           strokeWidth: 4
           strokeColor: black
-          strokeDashArray: ''
+          strokeDashArray: ""
           opacity: 1
           gradient:
             type: None
@@ -417,70 +460,70 @@ components:
           offsetX: 310
           offsetY: 470
         annotations:
-          - content: '6'
-            id: 0annotation
-            style:
-              strokeWidth: 0
-              strokeColor: transparent
-              fill: transparent
-              bold: false
-              textWrapping: WrapWithOverflow
-              color: black
-              whiteSpace: CollapseSpace
-              fontFamily: Arial
-              fontSize: 12
-              italic: false
-              opacity: 1
-              strokeDashArray: ''
-              textAlign: Center
-              textOverflow: Wrap
-              textDecoration: None
-            hyperlink:
-              link: ''
-              content: ''
-              textDecoration: None
-            constraints: 4
-            visibility: true
-            rotateAngle: 0
-            margin:
-              right: 0
-              bottom: 0
-              left: 0
-              top: 0
-            horizontalAlignment: Center
-            verticalAlignment: Center
-            offset:
-              x: 0.5
-              y: 0.5
+        - content: "6"
+          id: 0annotation
+          style:
+            strokeWidth: 0
+            strokeColor: transparent
+            fill: transparent
+            bold: false
+            textWrapping: WrapWithOverflow
+            color: black
+            whiteSpace: CollapseSpace
+            fontFamily: Arial
+            fontSize: 12
+            italic: false
+            opacity: 1
+            strokeDashArray: ""
+            textAlign: Center
+            textOverflow: Wrap
+            textDecoration: None
+          hyperlink:
+            link: ""
+            content: ""
+            textDecoration: None
+          constraints: 4
+          visibility: true
+          rotateAngle: 0
+          margin:
+            right: 0
+            bottom: 0
+            left: 0
+            top: 0
+          horizontalAlignment: Center
+          verticalAlignment: Center
+          offset:
+            x: 0.5
+            y: 0.5
         ports: []
         isExpanded: true
         expandIcon:
           shape: None
         inEdges:
-          - connectorL2B3w
+        - connectorL2B3w
         outEdges: []
-        parentId: ''
-        processId: ''
+        parentId: ""
+        processId: ""
         umlIndex: -1
         isPhase: false
         isLane: false
     Exercise:
       description: Content type to store an exercise
       required:
-        - Problems
+      - Problems
       type: object
       properties:
         Id:
           type: string
         Diagram:
-          "$ref": "#/components/schemas/Diagram"
+          $ref: '#/components/schemas/Diagram'
         Code:
           description: The code snippet corresponding to this diagram.
           type: string
         Problems:
           type: array
           items:
-            "$ref": "#/components/schemas/Problem"
+            $ref: '#/components/schemas/Problem'
     Edge:
       description: Conten type to store a diagram edge
       type: object
@@ -500,10 +543,10 @@ components:
         targetID: EllipseJ9KsU
         flip: None
         segments:
-          - type: Straight
-            point:
-              x: 0
-              y: 0
+        - type: Straight
+          point:
+            x: 0
+            y: 0
         sourceDecorator:
           shape: None
           width: 10
@@ -515,7 +558,7 @@ components:
             fill: black
             strokeColor: black
             strokeWidth: 1
-            strokeDashArray: ''
+            strokeDashArray: ""
             opacity: 1
             gradient:
               type: None
@@ -530,7 +573,7 @@ components:
             fill: black
             strokeColor: black
             strokeWidth: 1
-            strokeDashArray: ''
+            strokeDashArray: ""
             opacity: 1
             gradient:
               type: None
@@ -538,7 +581,7 @@ components:
           strokeWidth: 1
           strokeColor: black
           fill: transparent
-          strokeDashArray: ''
+          strokeDashArray: ""
           opacity: 1
           gradient:
             type: None
@@ -551,39 +594,39 @@ components:
           offsetY: 199.93
         annotations: []
         visible: true
-        sourcePortID: ''
+        sourcePortID: ""
         constraints: 11838
         sourcePadding: 0
-        targetPortID: ''
+        targetPortID: ""
         targetPadding: 0
         hitPadding: 10
         ports: []
-        parentId: ''
+        parentId: ""
     Diagram:
       description: A diagram consists of a set of edges and nodes.
       required:
-        - Paths
+      - Paths
       type: object
       properties:
         Paths:
-          "$ref": "#/components/schemas/PathList"
+          $ref: '#/components/schemas/PathList'
     PathList:
       required:
-        - Edges
-        - Nodes
+      - Edges
+      - Nodes
       type: object
       properties:
         Edges:
           type: array
           items:
-            "$ref": "#/components/schemas/Edge"
+            $ref: '#/components/schemas/Edge'
         Nodes:
           type: array
           items:
-            "$ref": "#/components/schemas/Node"
+            $ref: '#/components/schemas/Node'
     Student:
       required:
-        - AM
+      - AM
       type: object
       properties:
         AM:
@@ -594,8 +637,8 @@ components:
       description: Defines an unpublished collection of exercises used as a draft
         for the teacher.
       required:
-        - Exercises
-        - Name
+      - Exercises
+      - Name
       type: object
       properties:
         Id:
@@ -603,7 +646,7 @@ components:
         Exercises:
           type: array
           items:
-            "$ref": "#/components/schemas/Exercise"
+            $ref: '#/components/schemas/Exercise'
         Name:
           type: string
         DateCreated:
@@ -621,45 +664,20 @@ components:
         Exercises:
           type: array
           items:
-            "$ref": "#/components/schemas/Exercise"
+            $ref: '#/components/schemas/Exercise'
         Submissions:
           type: array
           items:
-            "$ref": "#/components/schemas/Submission"
+            $ref: '#/components/schemas/Submission'
         Published:
           type: boolean
     ProblemAnswer:
       type: object
-    DiagramProblem:
-      description: A problem defines the what is requested from a student during an
-        exam.
-      allOf:
-        - type: object
-        - "$ref": "#/components/schemas/Problem"
-    Submission:
-      required:
-        - Problem
-        - Exam
-        - AuthorId
-      type: object
-      properties:
-        Id:
-          type: string
-        Problem:
-          oneOf:
-            - "$ref": "#/components/schemas/DiagramProblem"
-            - "$ref": "#/components/schemas/Problem"
-        Score:
-          type: number
-        AuthorId:
-          type: string
-        Exam:
-          type: string
     Problem:
       description: A problem defines the what is requested from a student during an
         exam.
       required:
-        - ProblemType
+      - ProblemType
       type: object
       properties:
         Id:
@@ -667,10 +685,61 @@ components:
           type: string
         ProblemType:
           enum:
-            - Diagram
-            - Path
+          - Diagram
+          - Path
         Answer:
           type: object
+    DiagramProblem:
+      description: A problem defines the what is requested from a student during an
+        exam.
+      required:
+      - ProblemType
+      - Answer
+      type: object
+      properties:
+        Id:
+          description: A unique identifier.
+          type: string
+        ProblemType:
+          default: Diagram
+          type: string
+        Answer:
+          $ref: '#/components/schemas/Diagram'
+    PathProblem:
+      description: Defines a problem of listing available paths.
+      required:
+      - ProblemType
+      - Answer
+      type: object
+      properties:
+        Id:
+          description: A unique identifier.
+          type: string
+        ProblemType:
+          default: Path
+          type: string
+        Answer:
+          $ref: '#/components/schemas/PathList'
+    Submission:
+      required:
+      - Problem
+      - Exam
+      - AuthorId
+      type: object
+      properties:
+        Id:
+          type: string
+        Problem:
+          $ref: '#/components/schemas/PathProblem'
+          oneOf:
+          - $ref: '#/components/schemas/PathProblem'
+          - $ref: '#/components/schemas/DiagramProblem'
+        Score:
+          type: number
+        AuthorId:
+          type: string
+        Exam:
+          type: string
   securitySchemes:
     BasicAuthentication:
       type: http
