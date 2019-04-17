@@ -510,17 +510,17 @@ components:
     Exercise:
       description: Content type to store an exercise
       required:
-      - Problems
+      - problems
       type: object
       properties:
-        Id:
-          type: string
-        Diagram:
-          $ref: '#/components/schemas/Diagram'
-        Code:
+        code:
           description: The code snippet corresponding to this diagram.
           type: string
-        Problems:
+        diagram:
+          $ref: '#/components/schemas/Diagram'
+        id:
+          type: string
+        problems:
           type: array
           items:
             $ref: '#/components/schemas/Problem'
@@ -605,22 +605,22 @@ components:
     Diagram:
       description: A diagram consists of a set of edges and nodes.
       required:
-      - Paths
+      - paths
       type: object
       properties:
-        Paths:
+        paths:
           $ref: '#/components/schemas/PathList'
     PathList:
       required:
-      - Edges
-      - Nodes
+      - edges
+      - nodes
       type: object
       properties:
-        Edges:
+        edges:
           type: array
           items:
             $ref: '#/components/schemas/Edge'
-        Nodes:
+        nodes:
           type: array
           items:
             $ref: '#/components/schemas/Node'
@@ -631,115 +631,115 @@ components:
       properties:
         AM:
           type: string
-        Id:
+        id:
           type: string
     ExerciseCollection:
       description: Defines an unpublished collection of exercises used as a draft
         for the teacher.
       required:
-      - Exercises
-      - Name
+      - exercises
+      - name
       type: object
       properties:
-        Id:
+        category:
           type: string
-        Exercises:
+        dateCreated:
+          format: date-time
+          type: string
+        exercises:
           type: array
           items:
             $ref: '#/components/schemas/Exercise'
-        Name:
+        id:
           type: string
-        DateCreated:
-          format: date-time
-          type: string
-        Category:
+        name:
           type: string
     Exam:
       description: Defines a published exercised collection, available to students
         to make submissions.
       type: object
       properties:
-        Id:
-          type: string
-        Exercises:
+        exercises:
           type: array
           items:
             $ref: '#/components/schemas/Exercise'
-        Submissions:
+        id:
+          type: string
+        published:
+          type: boolean
+        submissions:
           type: array
           items:
             $ref: '#/components/schemas/Submission'
-        Published:
-          type: boolean
     ProblemAnswer:
       type: object
     Problem:
       description: A problem defines the what is requested from a student during an
         exam.
       required:
-      - ProblemType
+      - problemType
       type: object
       properties:
-        Id:
+        answer:
+          type: object
+        id:
           description: A unique identifier.
           type: string
-        ProblemType:
+        problemType:
           enum:
           - Diagram
           - Path
-        Answer:
-          type: object
     DiagramProblem:
       description: A problem defines the what is requested from a student during an
         exam.
       required:
-      - ProblemType
-      - Answer
+      - problemType
+      - answer
       type: object
       properties:
-        Id:
+        answer:
+          $ref: '#/components/schemas/Diagram'
+        id:
           description: A unique identifier.
           type: string
-        ProblemType:
+        problemType:
           default: Diagram
           type: string
-        Answer:
-          $ref: '#/components/schemas/Diagram'
     PathProblem:
       description: Defines a problem of listing available paths.
       required:
-      - ProblemType
-      - Answer
+      - problemType
+      - answer
       type: object
       properties:
-        Id:
+        answer:
+          $ref: '#/components/schemas/PathList'
+        id:
           description: A unique identifier.
           type: string
-        ProblemType:
+        problemType:
           default: Path
           type: string
-        Answer:
-          $ref: '#/components/schemas/PathList'
     Submission:
       required:
-      - Problem
-      - Exam
-      - AuthorId
+      - problem
+      - exam
+      - authorId
       type: object
       properties:
-        Id:
+        authorId:
           type: string
-        Problem:
+        exam:
+          type: string
+        id:
+          type: string
+        problem:
           $ref: '#/components/schemas/PathProblem'
           oneOf:
           - $ref: '#/components/schemas/PathProblem'
           - $ref: '#/components/schemas/DiagramProblem'
-        Score:
+        score:
           type: number
-        AuthorId:
-          type: string
-        Exam:
-          type: string
   securitySchemes:
     BasicAuthentication:
       type: http
